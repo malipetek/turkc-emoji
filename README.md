@@ -1,0 +1,1 @@
+# turkc-emoji
