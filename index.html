@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Türkçe Emoji Kısa Kodları Konsorsiyumu</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/emojione@3.1.2/lib/js/emojione.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBDDBnKzkaKZYM48447J9xnS9sVMKuHrv0",
+            authDomain: "emojikonsorsiyum.firebaseapp.com",
+            databaseURL: "https://emojikonsorsiyum.firebaseio.com",
+            projectId: "emojikonsorsiyum",
+            storageBucket: "",
+            messagingSenderId: "651789919556"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/eisbehr-/jquery.lazy@1.7.7/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/eisbehr-/jquery.lazy@1.7.7/jquery.lazy.plugins.min.js"></script>
+    <script src="https://pagination.js.org/dist/2.1.2/pagination.min.js"></script>
+    <svg style="display: none">
+        <defs>
+            <symbol id="icon-heart" viewBox="0 0 32 32">
+                <path d="M23.6 2c-3.363 0-6.258 2.736-7.599 5.594-1.342-2.858-4.237-5.594-7.601-5.594-4.637 0-8.4 3.764-8.4 8.401 0 9.433 9.516 11.906 16.001 21.232 6.13-9.268 15.999-12.1 15.999-21.232 0-4.637-3.763-8.401-8.4-8.401z"></path>
+            </symbol>
+            <symbol id="icon-bin2" viewBox="0 0 32 32">
+                <path d="M6 32h20l2-22h-24zM20 4v-4h-8v4h-10v6l2-2h24l2 2v-6h-10zM18 4h-4v-2h4v2z"></path>
+            </symbol>
+        </defs>
+    </svg>
+</head>
+<link rel="stylesheet" href="https://cdn.rawgit.com/superRaytin/paginationjs/master/dist/pagination.css" />
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    * {
+        box-sizing: border-box;
+        font-family: 'Fira Sans', sans-serif;
+        user-select: none;
+    }
+
+    body {
+        background: #0277BD;
+        color: #eee;
+    }
+
+    .signed-in-visible {
+        display: none;
+    }
+
+    .signed-in-invisible {
+        display: block;
+    }
+
+    .signed-in .signed-in-visible {
+        display: block;
+    }
+
+    .signed-in .signed-in-invisible {
+        display: none;
+    }
+
+    .firstscreen {
+        background: linear-gradient(135deg, rgba(255, 252, 99, 0.5) 0%, rgba(171, 41, 204, 0) 50%);
+        width: 100%;
+        height: 200vh;
+        padding: 20px;
+    }
+
+    .list {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        margin: 5px;
+        padding: 15px;
+    }
+
+    .list ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .list li {
+
+        flex-grow: 1;
+    }
+
+    .list li .visible {
+        background-color: rgba(255, 255, 255, .2);
+        min-width: 100px;
+        min-height: 100px;
+        padding: 10px;
+        margin: 5px 3px;
+        border-radius: 4px;
+        transition: font-size background-color .5s;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .list li .visible:hover {
+        background-color: rgba(255, 255, 255, 0.329);
+        font-size: 16px;
+    }
+
+    .list li {
+        position: relative;
+    }
+
+
+    .list li>label>.gosterge {
+        position: absolute;
+        padding: 2px 5px;
+        min-height: 24px;
+        min-width: 20px;
+        border-radius: 7px;
+        bottom: 0px;
+
+    }
+
+    .list li>label>.gosterge.oneri {
+        background-color: #E91E63;
+        left: 10px;
+    }
+
+    .list li>label>.gosterge.tartisma {
+        background-color: #9C27B0;
+        right: 15px;
+    }
+
+    .backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        transition: opacity .3s ease-out;
+        opacity: 0;
+        z-index: 10;
+    }
+
+    .css-modal-wrapper {
+        transition: opacity .3s ease-out;
+        visibility: hidden;
+        position: fixed;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 15;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+    }
+
+    .css-modal {
+        background-color: #0277BD;
+        border-radius: 4px;
+        padding: 20px;
+        pointer-events: all;
+        display: flex;
+        width: 80%;
+    }
+
+    .css-modal>*:nth-child(1) {
+        width: 20%;
+    }
+
+    .css-modal>*:nth-child(2) {
+        width: 40%;
+    }
+
+    .css-modal>*:nth-child(3) {
+        width: 40%;
+    }
+
+    [type=checkbox] {
+        display: none;
+    }
+
+    [type=checkbox]:checked~.css-modal-wrapper {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    [type=checkbox]:checked~.css-modal-wrapper~label {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    button {
+        outline: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: rgba(255, 255, 255, 0.5) #333 #333 rgba(255, 255, 255, 0.5);
+        border-style: solid;
+        background-color: #2196F3;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:active {
+        border-color: #333 rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.5) #333;
+    }
+
+    .messages:empty:after {
+        content: 'Buralar dutluk...';
+        font-size: 20px;
+    }
+
+    .fetched {
+        padding: 10px;
+        border-left: 10px;
+        margin: 10px;
+        overflow-y: scroll;
+        max-height: 80vh;
+    }
+
+    .oneri-yeri,
+    .tartisma-yeri {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .oneri-yeri>*,
+    .tartisma-yeri>* {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 8px 3px;
+        padding: 5px 15px;
+        border-radius: 4px;
+    }
+
+
+    .oneri-yeri .messages>*,
+    .tartisma-yeri .messages>* {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 8px 3px;
+        padding: 5px 15px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .user {
+        font-size: xx-small;
+        width: 25%;
+        float: right;
+        display: inline-flex;
+    }
+
+    .user .mini-avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 4px;
+        display: block;
+        box-sizing: content-box;
+    }
+
+    .oneri-yeri>h3,
+    .tartisma-yeri>h3 {
+        background-color: unset;
+    }
+
+    .text-loading {
+        background: url('https://raw.githubusercontent.com/malipetek/text-loading-gif/master/text-ld.gif');
+        height: 30px;
+        width: 100%;
+    }
+
+    .account-wrapper {
+        margin: 5px;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        display: inline-block;
+    }
+
+    .account-wrapper * {
+        margin: 5px;
+    }
+
+    .account-face {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 4px;
+    }
+
+    textarea {
+        width: 100%;
+        border-radius: 4px;
+        padding: 10px 20px;
+    }
+
+    .icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        stroke-width: 0;
+        stroke: currentColor;
+        fill: currentColor;
+    }
+
+    .sukular {
+        display: inline-block;
+        color: rgb(255, 197, 197);
+        float: right;
+        margin-right: 3px;
+        cursor: pointer;
+    }
+
+    .sukulu {
+        color: red;
+    }
+
+    .delete {
+        display: inline-block;
+        color: #999;
+        float: right;
+        margin-right: 3px;
+        cursor: pointer;
+
+    }
+
+    small.danger {
+        background-color: #F44336;
+        padding: 6px;
+        line-height: 3em;
+        border-radius: 4px;
+    }
+
+    .paginationjs {
+        display: flex;
+        justify-content: center;
+    }
+
+    .fetched::-webkit-scrollbar{
+    width: 10px;
+    }
+    .fetched::scrollbar{
+        width: 30px;
+    }
+
+    .fetched::-webkit-scrollbar-track {
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    .fetched::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.3);
+    width: 12px;
+    }
+</style>
+
+<body>
+    <div class="firstscreen">
+        <h1>
+            Türkçe Emoji Konsorsiyumu
+        </h1>
+        <div class="account-wrapper">
+            <div class="account">
+
+            </div>
+            <button onclick="signin()" class="signin signed-in-invisible">
+                Konsorsiyuma Katılın
+            </button>
+        </div>
+
+        <div id="kisa-kodlar" class="list">
+            <h3>
+                Türkçe emoji kısa kodları tekliflere açık:
+            </h3>
+            <ul>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+<script>
+    log = console.log;
+
+    function arrayify(object) {
+        if (!object) return object;
+        var array = [];
+        var keys = Object.keys(object);
+        for (var i = 0; i < keys.length; i++) {
+            array.push(object[keys[i]]);
+        }
+        return array;
+    }
+
+    function arrayifyWithKeys(object) {
+        if (!object) return object;
+        var array = [];
+        var keys = Object.keys(object);
+        for (var i = 0; i < keys.length; i++) {
+            array.push({
+                key: keys[i],
+                content: object[keys[i]]
+            });
+        }
+        return array;
+    }
+
+    var db = firebase.database().ref('/');
+
+    window.onload = function () {
+
+
+
+        var ceviriler = $('#kisa-kodlar');
+        var cevirilist = $('.list>ul');
+        var ceviri = '__';
+        var emojiArray = arrayifyWithKeys(emojione.emojioneList);
+        var gostergeQueue = [];
+        
+        async function gostergeQueueStart(){
+            var done = await gostergeQueue[0]();
+            if(done) gostergeQueue.splice(0,1);
+            if(gostergeQueue.length) gostergeQueueStart();
+        }
+
+        $('.list').pagination({
+            dataSource: emojiArray,
+            pageSize: 200,
+            callback: function (data, pagination) {
+                // template method of yourself
+                cevirilist.html('');
+                data.forEach((emoji) => {
+                    var emojikodu = emoji.key;
+                    var $el = $(
+                        `
+        <li>
+        <label for="${emojikodu}" onclick="loadOneriVeTartisma(this.parentNode, '${emojikodu}')">
+        <div class="visible" >
+            ${emojione.toImage(emojikodu).replace('src', 'data-src') }
+        </div>
+        <div class="gosterge oneri">0</div>
+        <div class="gosterge tartisma">0</div>
+    </label>
+    <input type="checkbox" id="${emojikodu}" />
+    <div class="css-modal-wrapper">
+        <div class="css-modal">
+            <div class="modal-main">
+                ${ emojione.toImage(emojikodu).replace('src', 'data-src') }
+                <br/>
+                <br/>
+                <b> Kısa kod: </b>
+                <em> ${emojikodu }</em>
+                <br/>
+                <br/>
+                <b> Çevirisi: </b>
+                <em>${ceviri} </em>
+                <br/>
+            </div>
+            <div class="oneri-yeri"></div>
+            <div class="tartisma-yeri"></div>
+        </div>
+    </div>
+    <label class="backdrop" for="${emojikodu}">
+    </label>
+</li>
+`
+                    ).appendTo(cevirilist);
+                    $el.find('img').Lazy();
+                    gostergeQueue.push(function () {
+                        return new Promise(function(gostergeResolve, rej){
+                            Promise.all([
+                                db.child(`/oneriler/${emojikodu}/`).once('value'),
+                                db.child(`/tartisma/${emojikodu}/`).once('value')
+                            ]).then(([oneriler, tartisma]) => {
+                                $el.find('.gosterge.oneri').text(oneriler.numChildren());
+                                $el.find('.gosterge.tartisma').text(tartisma.numChildren());
+                                gostergeResolve(true);
+                            });
+                        }).catch((err) => log(err));
+                    });
+                });
+            gostergeQueueStart();
+            }
+        });
+    }
+
+
+    function loadOneriVeTartisma(liElement, emojikodu) {
+        var $tartismayeri = $(liElement).find('.tartisma-yeri');
+        $tartismayeri.find('*').remove();
+        $(`<div class="text-loading"> </div>`).appendTo($tartismayeri);
+        $tartismayeri.addClass('fetched').find('*').remove();
+
+        $(`<h3> Tartışma </h3>
+                <div class="messages"></div>`).appendTo($tartismayeri);
+        $(
+            `<div class="signed-in-visible tartisma-mesaj"> 
+                 <h5> Tartışmaya Katıl: </h5>
+                 <textarea cols="20" rows="10"></textarea> <br/>
+                 <button onclick="tartismayaMesajGonder(this, '${emojikodu}')">Gönder</button>
+                 </div>`
+        ).appendTo($tartismayeri);
+
+        db.child(`/tartisma/${emojikodu}`).on('child_added', (mesajobj) => {
+            if (!$tartismayeri.get(0).parentNode) {
+                db.child(`/tartisma/${emojikodu}`).off('child_added');
+                db.child(`/tartisma/${emojikodu}`).off('child_removed');
+                return;
+            }
+
+            const mesajkey = mesajobj.key;
+            mesajobj = mesajobj.val();
+            const deleteStr = auth.currentUser && mesajobj.uid == auth.currentUser.uid ?
+                `<div class="delete" title="Sil" onclick="db.child(\'/tartisma/${emojikodu}/${mesajkey}\').set(null)">
+                <svg class="icon icon-bin2"><use xlink:href="#icon-bin2"></use></svg>
+             </div>` :
+                '';
+            $tartismayeri.find('.messages').prepend(
+                `
+                                    <div data-mesaj-id=${mesajkey}> ${mesajobj.mesaj}
+                                    <div class="user" data-uid=${mesajobj.uid}> </div> ${deleteStr}
+                                    </div>`
+            );
+            getUserInfo(mesajobj.uid).then(user => {
+                log(user);
+                if (!user) return;
+                $(`.user[data-uid=${user.key}]`).html(
+                    `<img class="mini-avatar" src="${
+                    user.photoURL
+                }" /> <span> ${user.displayName}</span>`
+                );
+            });
+        });
+        db.child(`/tartisma/${emojikodu}`).on('child_removed', removedMesaj => {
+            if (!$tartismayeri.get(0).parentNode) {
+                db.child(`/tartisma/${emojikodu}`).off('child_added');
+                db.child(`/tartisma/${emojikodu}`).off('child_removed');
+                return;
+            }
+
+            $tartismayeri.find(`.messages [data-mesaj-id=${removedMesaj.key}]`).remove();
+        });
+
+        // öneriler
+
+        var $oneriyeri = $(liElement).find('.oneri-yeri');
+        $oneriyeri.find('*').remove();
+        $(`<div class="text-loading"> </div>`).appendTo($oneriyeri);
+        $oneriyeri.addClass('fetched').find('*').remove();
+
+        $(`
+<h3> Öneriler </h3>
+<div class="messages"></div>`).appendTo($oneriyeri);
+        $(
+            `
+    <div class="signed-in-visible tartisma-mesaj">
+    <h5> Öneride Bulun: </h5>
+    <textarea cols="20" rows="1"></textarea>
+    <small>Her kullanıcı 1 öneri yapabilir. </small><br/>
+     <small class="danger">Önerinizi güncellediğinizde şukularınız sıfırlanır. </small>
+    <br/>
+    <button onclick="oneriGonder(this, '${emojikodu}')">Öner</button>
+    </div>`
+        ).appendTo($oneriyeri);
+
+        function oneriUpdate(oneriobj) {
+            if (!$oneriyeri.get(0).parentNode) {
+                db.child(`/oneriler/${emojikodu}`).off('child_added');
+                db.child(`/oneriler/${emojikodu}`).off('child_changed');
+                return;
+            }
+            var oneri = oneriobj.child('oneri').exists() ? oneriobj.child('oneri').val() : oneriobj.val();
+            var sukular = oneriobj.child('sukucular').exists() ? oneriobj.child('sukucular').numChildren() : 0;
+            var sukufied = auth.currentUser ? oneriobj.child('sukucular').hasChild(auth.currentUser.uid) : false;
+            var $oneri = $oneriyeri.find(`.messages [data-oneri-uid = ${oneriobj.key}]`).length ? $oneriyeri.find(
+                `.messages [data-oneri-uid = ${oneriobj.key}]`) : $(
+                `<div data-oneri-uid=${oneriobj.key} data-emojicode=${emojikodu}> </div>`)
+
+            const deleteStr = auth.currentUser && oneriobj.key == auth.currentUser.uid ?
+                `
+<div class="delete" title="Sil" onclick="db.child(\'/oneriler/${emojikodu}/${auth.currentUser.uid}\').set(null)">
+    <svg class="icon icon-bin2">
+        <use xlink:href="#icon-bin2"></use>
+    </svg>
+</div>` :
+                '';
+            $oneri.html(
+                `${oneri} <div class="user" data-uid=${oneriobj.key}> 
+    </div><div class="sukular ${sukufied ? 'sukulu' : ''}" title="Oy ver"> <b>${sukular}</b>
+        <svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg>
+        </div>${deleteStr}`
+            )
+            $oneri.prependTo($oneriyeri.find('.messages'));
+            getUserInfo(oneriobj.key).then(user => {
+                if (!user) return;
+                $(`.user[data-uid=${user.key}]`).html(
+                    `
+            <img class="mini-avatar" src="${
+                user.photoURL
+            }" />
+            <span> ${user.displayName}</span>`
+                );
+            });
+        };
+
+        db.child(`/oneriler/${emojikodu}`).on('child_added', oneriUpdate);
+        db.child(`/oneriler/${emojikodu}`).on('child_changed', oneriUpdate);
+        db.child(`/oneriler/${emojikodu}`).on('child_removed', removedOneri => {
+            if (!$oneriyeri.get(0).parentNode) {
+                db.child(`/oneriler/${emojikodu}`).off('child_added');
+                db.child(`/oneriler/${emojikodu}`).off('child_changed');
+                db.child(`/oneriler/${emojikodu}`).off('child_removed');
+                return;
+            }
+
+            $oneriyeri.find(`.messages [data-oneri-uid=${removedOneri.key}]`).remove();
+        });
+
+    }
+
+    // signin 
+    var gh_auth = new firebase.auth.GithubAuthProvider();
+
+    var auth = firebase.auth();
+
+    function signin() {
+        auth.signInWithPopup(gh_auth).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+        });
+    }
+
+    function signout() {
+        auth.signOut();
+    }
+
+    function signinHandler() {
+        $(
+            `<div class="account-face"> <img class="avatar" src="${
+        auth.currentUser.photoURL || 'avatar.jpg'
+    }" <div class="name"> ${
+        auth.currentUser.displayName || 'birisi'
+    }</div>
+<button onclick="signout()" class="register">
+    Çıkış
+</button>
+</div>`
+        ).appendTo('.account');
+        $('body').addClass('signed-in')
+    }
+
+    function signOutHandler() {
+        $('.account').html('');
+        $('body').removeClass('signed-in')
+    }
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            signinHandler(user)
+        } else {
+            setTimeout(() => {
+                if (!auth.currentUser) {
+                    signOutHandler()
+                }
+            }, 1000)
+        }
+    });
+
+    function tartismayaMesajGonder(button, emojikodu) {
+        var $textarea = $(button).siblings('textarea');
+        var pushRef = db.child(`/tartisma/${emojikodu}`).push();
+        pushRef.set({
+            uid: auth.currentUser.uid,
+            mesaj: $textarea.val()
+        });
+        $textarea.val('');
+    }
+
+    function oneriGonder(button, emojikodu) {
+        var $textarea = $(button).siblings('textarea');
+        const sukucular = {};
+        sukucular[auth.currentUser.uid] = true;
+        db.child(`/oneriler/${emojikodu}/${auth.currentUser.uid}/`).set({
+            oneri: $textarea.val(),
+            sukucular
+        });
+        $textarea.val('');
+    }
+
+    async function getUserInfo(uid) {
+        const user = await db.child(`/kullanicilar/${uid}`).once('value').then(user => user);
+        if (user.val()) {
+            return Object.assign(user.val(), {
+                key: user.key
+            })
+        } else {
+            return user.val()
+        };
+    }
+
+    $(document).on('click', '.sukular', function () {
+        if (!auth.currentUser) return;
+        const emojicode = $(this).closest('[data-emojicode]').attr('data-emojicode');
+        const oneriId = $(this).closest('[data-emojicode]').attr('data-oneri-uid');
+        const value = $(this).hasClass('sukulu') ? null : true;
+        db.child(`/oneriler/${emojicode}/${oneriId}/sukucular/${auth.currentUser.uid}`).set(value);
+    });
+</script>
+
+</html>
